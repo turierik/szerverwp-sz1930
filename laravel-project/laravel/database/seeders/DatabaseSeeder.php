@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
 
         $categories = Category::factory(5) -> create();
         foreach($categories as $c){
-            $c -> posts() -> attach($posts -> random(rand(0, 5))); // N:N kapcsolat seedelése
+            $c -> posts() -> attach($posts -> random(rand(0, count($posts)))); // N:N kapcsolat seedelése
         }
     }
 }
