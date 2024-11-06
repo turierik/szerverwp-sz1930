@@ -10,6 +10,17 @@
 <body>
     <div class="container mx-auto">
         <h1 class="text-3xl text-fuchsia-700 pb-8">Laravel Blog</h1>
+
+        @auth
+            <h2 class="text-xl">Szia, {{ Auth::user() -> name }}!</h2>
+            Kijelentkezés
+        @endauth
+
+        @guest
+            <a href="{{ route('login') }}">Bejelentkezés</a><br>
+            <a href="{{ route('register') }}">Regisztráció</a><br>
+        @endguest
+
         @yield('content')
     </div>
 </body>

@@ -21,16 +21,6 @@
         <span class="text-red-500 font-bold">{{ $message }}</span>
     @enderror<br>
 
-    Szerző:<br>
-    <select name="author_id">
-        @foreach ($users as $user)
-            <option value="{{ $user -> id}}" {{ $user -> id == old('author_id') ? 'selected' : ''  }}>{{ $user -> name }}</option>
-        @endforeach
-    </select>
-    @error('author_id')
-        <span class="text-red-500 font-bold">{{ $message }}</span>
-    @enderror<br>
-
     Kategóriák:<br>
     @foreach($categories as $c)
         <input type="checkbox" name="categories[]" value="{{ $c -> id }}"
