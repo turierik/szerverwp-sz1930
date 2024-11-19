@@ -26,7 +26,8 @@ class PostStoreOrUpdateRequest extends FormRequest
             'content' => 'required|min:10',
             //'author_id' => 'required|integer|exists:users,id',
             'categories' => 'array',
-            'categories.*' => 'integer|distinct|exists:categories,id'
+            'categories.*' => 'integer|distinct|exists:categories,id',
+            'imagefile' => 'nullable|file|image'
         ];
     }
 

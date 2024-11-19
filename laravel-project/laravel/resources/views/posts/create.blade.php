@@ -6,7 +6,7 @@
 
 <h2>Új bejegyzés</h2>
 
-<form method="POST" action="{{ route('posts.store') }}">
+<form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
     @csrf
 
     Cím:<br>
@@ -29,6 +29,13 @@
     @error('categories')
         <span class="text-red-500 font-bold">{{ $message }}</span>
     @enderror
+
+    Kép:<br>
+    <input type="file" name="imagefile">
+    @error('imagefile')
+        <span class="text-red-500 font-bold">{{ $message }}</span>
+    @enderror<br>
+
 
     <button type="submit">Küldés</button>
 

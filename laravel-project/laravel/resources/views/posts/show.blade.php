@@ -6,6 +6,10 @@
 
 <h2>{{ $post -> title }}</h2>
 
+@if ($post -> image)
+    <img src="{{ Storage::disk('public') -> url('images/' . $post -> image) }}" alt="Kép">
+@endif
+
 @can('update', $post)
 <a href="{{ route('posts.edit', ['post' => $post]) }}">Szerkesztés</a>
 @endcan

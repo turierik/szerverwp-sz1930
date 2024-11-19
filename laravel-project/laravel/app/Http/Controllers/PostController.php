@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -20,7 +21,7 @@ class PostController extends Controller
     {
         return view('posts.index', [
             // 'posts' => Post::all()
-            'posts' => Post::with('user') -> get()
+            'posts' => Post::with('user') -> paginate(12)
         ]);
     }
 
@@ -46,6 +47,14 @@ class PostController extends Controller
 
         $validated = $request -> validated();
         $validated['author_id'] = Auth::user() -> id;
+
+        if ($request -> hasFile('imagefile')){
+            $file = $request -> file('imagefile');
+            $fname = $file -> hashName();
+
+            Storage::disk('public') -> put('images/' . $fname, $file -> get());
+            $validated['image'] = $fname;
+        }
 
         $p = Post::create($validated);
         $p -> categories() -> sync($validated['categories'] ?? []);
@@ -98,7 +107,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         Gate::authorize('delete', $post);
-        
+
         $post -> delete();
         Session::flash('post-deleted');
         return redirect() -> route('posts.index');
